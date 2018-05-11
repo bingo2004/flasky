@@ -1,3 +1,4 @@
+#-*-coding: utf-8 -*-
 from flask import render_template, redirect, url_for, abort, flash, request,\
     current_app
 from flask_login import login_required, current_user
@@ -13,6 +14,7 @@ def index():
     form = PostForm()
     if current_user.can(Permission.WRITE) and form.validate_on_submit():
         post = Post(body=form.body.data,
+                    name=form.name.data.encode('utf-8'),
                     author=current_user._get_current_object())
         db.session.add(post)
         db.session.commit()
@@ -99,10 +101,12 @@ def edit(id):
         abort(403)
     form = PostForm()
     if form.validate_on_submit():
+        post.name = form.name.data
         post.body = form.body.data
         db.session.add(post)
         db.session.commit()
         flash('The post has been updated.')
         return redirect(url_for('.post', id=post.id))
+    form.name.data = post.name
     form.body.data = post.body
     return render_template('edit_post.html', form=form)

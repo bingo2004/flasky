@@ -1,3 +1,4 @@
+#coding: utf-8
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
     SubmitField
@@ -52,5 +53,6 @@ class EditProfileAdminForm(FlaskForm):
 
 
 class PostForm(FlaskForm):
+    name = StringField('Blog name', validators=[Length(0, 64)])
     body = PageDownField("What's on your mind?", validators=[DataRequired()])
     submit = SubmitField('Submit')

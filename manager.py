@@ -1,3 +1,4 @@
+#encoding='utf-8'
 from flasky import make_shell_context, test, app, migrate
 from flask_script import Manager,Shell
 from flask_migrate import MigrateCommand
