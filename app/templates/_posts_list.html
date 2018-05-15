@@ -2,15 +2,8 @@
     {% for post in posts %}
     <li class="post">
         <div class="post-content">
-            <div class="post-date">发表于：{{ moment(post.timestamp).format('LL') }}</div>
+            <div class="post-date">{{ moment(post.timestamp).format('LL') }}</div>
 		<div class="post-name"><a href="{{ url_for('.post', id=post.id) }}"><font size='5'>{{ post.name}}</font></a></div>
-            <div class="post-body">
-                {% if post.body_html %}
-                    {{ post.body_html | safe }}
-                {% else %}
-                    {{ post.body }}
-                {% endif %}
-            </div>
             <div class="post-footer">
                 {% if current_user == post.author %}
                 <a href="{{ url_for('.edit', id=post.id) }}">
